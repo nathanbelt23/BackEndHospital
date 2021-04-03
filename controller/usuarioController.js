@@ -82,16 +82,33 @@ module.exports.actualizarUsuario = async(req = request, res = response) => {
 
 module.exports.getUsuarios = async(req = request, res = response) => {
     try {
-        var listUsuarios = await usuarioModel.find({}, "nombre email role google");
+        /*
+                var listUsuarios = await usuarioModel.
+                find({}, "nombre email role google")
+                    .skip(req.desde)
+                    .limit(5);
+
+                var totalUsuarios = await usuarioModel.count();*/
+
+        const [listUsuarios, totalUsuarios] = await Promise.all([
+            usuarioModel.find({}, "nombre email role google")
+            .skip(req.desde)
+            .limit(5),
+            usuarioModel.count()
+        ]);
+
+
         res.json({
             ok: true,
             msg: "Listado de usuario",
+            totalUsuarios,
             usuarios: listUsuarios
-                /* ,
-                            uid: req.uid,
-                            amor: 'nancy' */
+
+
         });
     } catch (error) {
+
+        console.log(error);
         res.status(400).json({
             ok: false,
             msg: "Comunicate con el admin",

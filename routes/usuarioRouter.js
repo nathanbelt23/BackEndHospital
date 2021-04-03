@@ -4,10 +4,13 @@ const routes = express.Router();
 const usuarioController = require('../controller/usuarioController');
 const { ValidarCampos } = require('../helpers/mostrarValidarCampos')
 const valJWT = require('../helpers/validar-jwt');
+routes.get('/', [
+        check('desde', 'Es necesario es limite inferior').not().isEmpty(),
+        check('desde', 'debe ser mayor  a cero').notEmpty().isInt({ min: 0 }),
+        valJWT.ValidarJWT,
+        ValidarCampos
 
-
-routes.get('/', valJWT.ValidarJWT,
-
+    ],
     usuarioController.getUsuarios);
 
 
