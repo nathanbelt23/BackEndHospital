@@ -12,4 +12,13 @@ routes.post(
     ],
     autCon.login
 );
+
+routes.post(
+    "/google", [
+        check("token", "Por favor digita el email").not().isEmpty(),
+        ValidarCampos,
+    ],
+    autCon.googleSingIn
+);
+
 module.exports = routes;

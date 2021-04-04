@@ -15,6 +15,7 @@ app.listen(3000, () => {
 
 
 connectDB();
+app.use(express.static('public'));
 app.use('/api/login', require('./routes/authRouter'));
 app.use('/api/hospitales', require('./routes/hospital.router'));
 app.use('/api/usuarios', require('./routes/usuarioRouter'));

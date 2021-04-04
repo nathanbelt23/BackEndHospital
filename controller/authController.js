@@ -1,6 +1,7 @@
 const { request, response } = require('express');
 const usuarioModel = require('../model/usuarioModel');
 const bcrypt = require("bcryptjs");
+const google = require('../helpers/google-verify')
 
 const GenerarJWT = require('../helpers/jwt')
 
@@ -43,6 +44,36 @@ module.exports.login = async(req = request, res = response) => {
 
             });
         }
+
+    } catch (error) {
+        console.warn(error);
+        res.status(401).json({
+            ok: false,
+            msg: "Llama al administrador"
+        });
+
+    }
+
+}
+
+
+module.exports.googleSingIn = async(req = request, res = response) => {
+    const { token } = req.body;
+    const { name, email, picture } =
+    await google.googleVerify(token);
+    try {
+        res.json({
+            ok: true,
+            msg: "ok",
+            token,
+            name,
+            email,
+            picture
+        });
+        res.json({
+            ok: true,
+            msg: "ok"
+        });
 
     } catch (error) {
         console.warn(error);
