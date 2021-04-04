@@ -17,4 +17,15 @@ routes.get('/', [
     ValidarCampos
 ], hospitalController.ListadoTodosHospital);
 
+routes.put('/:id', [
+    check('nombre', 'El nombre del hospital es obligatorio').not().isEmpty(),
+    ValidarJWT,
+    ValidarCampos
+], hospitalController.ActualizarHospital);
+
+
+routes.delete('/:id', [
+    ValidarJWT,
+    ValidarCampos
+], hospitalController.BorrarHospital);
 module.exports = routes;

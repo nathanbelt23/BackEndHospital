@@ -8,7 +8,7 @@ module.exports.GenerarJWT = (uid) => {
         const payload = { uid };
         jwt.sign(
             payload,
-            process.env.JWT_SECRET, {
+            process.env.JWT_SECRET.trim(), {
                 expiresIn: "12h",
             },
             (err, token) => {

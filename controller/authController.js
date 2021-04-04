@@ -70,11 +70,30 @@ module.exports.googleSingIn = async(req = request, res = response) => {
             email,
             picture
         });
-        res.json({
-            ok: true,
-            msg: "ok"
+
+    } catch (error) {
+        console.warn(error);
+        res.status(401).json({
+            ok: false,
+            msg: "Llama al administrador"
         });
 
+    }
+
+}
+
+
+module.exports.renewToken = async(req = request, res = response) => {
+    try {
+        var uid = req.uid;
+        console.log('renewToken');
+        console.warn(uid);
+        var token = await GenerarJWT.GenerarJWT(uid);
+        res.json({
+            ok: true,
+            msg: "ok",
+            token
+        });
     } catch (error) {
         console.warn(error);
         res.status(401).json({
